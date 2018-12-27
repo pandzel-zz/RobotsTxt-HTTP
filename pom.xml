@@ -24,6 +24,12 @@
       <email>p.andzel@yahoo.com</email>
     </developer>
   </developers>
+    
+  <scm>
+    <connection>scm:git:git@github.com:pandzel/RobotsTxt-HTTP.git</connection>
+    <developerConnection>scm:git:ssh@github.com:pandzel/RobotsTxt-HTTP.git</developerConnection>
+    <url>https://github.com/pandzel/RobotsTxt-HTTP</url>
+  </scm>
   
   <dependencies>
     <dependency>
