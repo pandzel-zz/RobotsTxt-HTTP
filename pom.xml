@@ -8,7 +8,7 @@
   
   <name>Robots.txt HTTP client</name>
   <description>Apache HttpClient wrapper with ability to process and apply robots.txt file</description>
-  
+  <url>https://github.com/pandzel/RobotsTxt-HTTP</url>
     
   <licenses>
     <license>
