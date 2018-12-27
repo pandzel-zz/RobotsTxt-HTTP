@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /root/
+Crawl-Delay: 5
+
+User-agent: special
+Crawl-Delay: 2
