@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/pandzel/RobotsTxt-HTTP.png?branch=master)](https://travis-ci.org/pandzel/RobotsTxt-HTTP)
+[![Maven Central](https://img.shields.io/maven-central/v/com.panforge/robots-http.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.panforge%22%20AND%20a:%22robots-http%22)
 
 # RobotsTxt-HTTP
 Apache HttpClient wrapper with ability to process and apply robots.txt file directives.
