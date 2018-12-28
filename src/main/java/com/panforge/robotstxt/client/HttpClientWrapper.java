@@ -47,10 +47,10 @@ public class HttpClientWrapper extends CloseableHttpClient {
       Header userAgentHeader = request.getFirstHeader("User-Agent");
       String userAgent = userAgentHeader != null? userAgentHeader.getValue(): "";
       Grant grant = robotsTxt.ask(userAgent, request.getRequestLine().getUri());
-      if (grant != null && !grant.hasAccess()) {
+      if (!grant.hasAccess()) {
         throw new HttpRobotsException(request.getRequestLine().getUri().toString(), userAgent, grant.getClause());
       }
-      if (grant != null && grant.getCrawlDelay() != null) {
+      if (grant.getCrawlDelay() != null) {
         robotsCache.enter(userAgent, grant.getCrawlDelay(), target);
       }
     }
