@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pandzel/RobotsTxt-HTTP.png?branch=master)](https://travis-ci.org/pandzel/RobotsTxt-HTTP)
+
 # RobotsTxt-HTTP
 Apache HttpClient wrapper with ability to process and apply robots.txt file directives.
 
