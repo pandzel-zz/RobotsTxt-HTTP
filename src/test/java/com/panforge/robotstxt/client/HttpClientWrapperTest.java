@@ -34,7 +34,6 @@ public class HttpClientWrapperTest {
   private static ClientAndServer mockServer;
   
   private CloseableHttpClient httpClient;
-  private RobotsCache robotsCache;
   private HttpClientWrapper httpClientWrapper;
   
   public HttpClientWrapperTest() {
@@ -57,8 +56,7 @@ public class HttpClientWrapperTest {
   @Before
   public void setUp() {
     httpClient = HttpClients.createSystem();
-    robotsCache = new RobotsCacheImpl();
-    httpClientWrapper = new HttpClientWrapper(httpClient, robotsCache);
+    httpClientWrapper = new HttpClientWrapper(httpClient);
   }
   
   @After

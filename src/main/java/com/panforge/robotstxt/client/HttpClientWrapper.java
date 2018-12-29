@@ -35,9 +35,22 @@ public class HttpClientWrapper extends CloseableHttpClient {
   private final CloseableHttpClient httpClient;
   private final RobotsCache robotsCache;
 
+  /**
+   * Creates instance of the wrapper.
+   * @param httpClient HTTP client
+   * @param robotsCache robots cache
+   */
   public HttpClientWrapper(CloseableHttpClient httpClient, RobotsCache robotsCache) {
     this.httpClient = httpClient;
     this.robotsCache = robotsCache;
+  }
+
+  /**
+   * Creates instance of the wrapper.
+   * @param httpClient underlying HTTP client
+   */
+  public HttpClientWrapper(CloseableHttpClient httpClient) {
+    this(httpClient, RobotsCache.DEFAULT);
   }
 
   @Override

@@ -32,8 +32,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
  * Default implementation of robots cache.
  */
 public class RobotsCacheImpl implements RobotsCache {
+  private static final int INITIAL_SIZE = 1000;
+  /**
+   * Singleton instance of the cache.
+   */
+  public static final RobotsCacheImpl INSTANCE = new RobotsCacheImpl();
 
-  private static final Map<String, Entry> CACHE = new LimitedSizeMap<>(1000, 
+  private final LimitedSizeMap<String, Entry> cache = new LimitedSizeMap<>(INITIAL_SIZE, 
           entry -> !entry.isLocked(), 
           (e1, e2) -> e1.counter - e2.counter, 
           e -> { e.counter = 0; return e; });
@@ -41,19 +46,35 @@ public class RobotsCacheImpl implements RobotsCache {
   @Override
   public RobotsTxt fetch(CloseableHttpClient httpClient, HttpHost target) {
     String address = getAddress(target);
-    Entry robotsTxtEntry = CACHE.get(address);
+    Entry robotsTxtEntry = cache.get(address);
     if (robotsTxtEntry != null) {
       return robotsTxtEntry.robotsTxt;
     }
     RobotsTxt robotsTxt = fetchRobotsTxt(httpClient, target);
-    CACHE.put(address, new Entry(robotsTxt));
+    cache.put(address, new Entry(robotsTxt));
     return robotsTxt;
+  }
+
+  /**
+   * Gets max cache size.
+   * @return max cache size
+   */
+  public int getMaxSize() {
+    return cache.getMaxSize();
+  }
+
+  /**
+   * Sets max cache size.
+   * @param maxSize max cache size
+   */
+  public void setMaxSize(int maxSize) {
+    cache.setMaxSize(maxSize);
   }
 
   @Override
   public void enter(String userAgent, Integer crawlDelay, HttpHost target) {
     String address = getAddress(target);
-    Entry robotsTxtEntry = CACHE.get(address);
+    Entry robotsTxtEntry = cache.get(address);
     synchronized (this) {
     if (robotsTxtEntry == null) {
       return;
@@ -67,7 +88,7 @@ public class RobotsCacheImpl implements RobotsCache {
   
   @Override
   public void release() {
-    CACHE.clear();
+    cache.clear();
   }
 
   private RobotsTxt fetchRobotsTxt(CloseableHttpClient httpClient, HttpHost target) {

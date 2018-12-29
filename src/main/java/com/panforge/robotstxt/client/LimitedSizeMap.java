@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 class LimitedSizeMap<TI,TD> extends AbstractMap<TI,TD> {
   private final HashMap<TI,TD> data = new HashMap<>();
-  private final int maxSize;
+  private int maxSize;
   private final Predicate<TD> predicate;
   private final Comparator<TD> comparator;
   private final UnaryOperator<TD> finalizer;
@@ -42,6 +42,15 @@ class LimitedSizeMap<TI,TD> extends AbstractMap<TI,TD> {
     this.finalizer = finalizer;
   }
 
+  public int getMaxSize() {
+    return maxSize;
+  }
+
+  public synchronized void setMaxSize(int maxSize) {
+    this.maxSize = maxSize;
+    resize();
+  }
+
   @Override
   public Set<Entry<TI, TD>> entrySet() {
     return data.entrySet();
@@ -49,6 +58,16 @@ class LimitedSizeMap<TI,TD> extends AbstractMap<TI,TD> {
 
   @Override
   public synchronized TD put(TI key, TD value) {
+    resize();
+    return data.put(key, value);
+  }
+
+  @Override
+  public synchronized TD get(Object key) {
+    return data.get(key);
+  }
+  
+  private void resize() {
     if (size() >= maxSize) {
       List<Map.Entry<TI, TD>> toDelete = entrySet().stream()
               .filter(e -> predicate.test(e.getValue()))
@@ -58,12 +77,5 @@ class LimitedSizeMap<TI,TD> extends AbstractMap<TI,TD> {
       toDelete.forEach(e -> remove(e.getKey()));
       values().forEach(e -> finalizer.apply(e));
     }
-    return data.put(key, value);
   }
-
-  @Override
-  public synchronized TD get(Object key) {
-    return data.get(key);
-  }
-  
 }

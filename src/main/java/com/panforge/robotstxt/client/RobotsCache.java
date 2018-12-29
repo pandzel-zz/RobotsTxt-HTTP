@@ -23,7 +23,30 @@ import org.apache.http.impl.client.CloseableHttpClient;
  * Robots cache.
  */
 public interface RobotsCache {
+  /**
+   * Fetches cached robots.txt.
+   * @param httpClient HTTP client
+   * @param target target
+   * @return robots.txt if any
+   */
   RobotsTxt fetch(CloseableHttpClient httpClient, HttpHost target);
+  
+  /**
+   * Enters into the host.
+   * It will stop any further access by any other thread by given crawl delay
+   * @param userAgent user agent or <code>null</code> if no user agent specified
+   * @param crawlDelay crawl delay or <code>null</code> if no delay specified
+   * @param target target
+   */
   void enter(String userAgent, Integer crawlDelay, HttpHost target);
+  
+  /**
+   * Releases all cached information.
+   */
   void release();
+  
+  /**
+   * Default singleton instance.
+   */
+  RobotsCache DEFAULT = RobotsCacheImpl.INSTANCE;
 }
