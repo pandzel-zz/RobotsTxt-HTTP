@@ -20,7 +20,7 @@ Using in your own project:
     <dependency>
         <groupId>com.panforge</groupId>
         <artifactId>robots-http</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </dependency>
   ...
   </dependencies>
@@ -29,7 +29,7 @@ Using in your own project:
 * Use in the code
 
 ```java
-try (CloseableHttpClient httpClient = new HttpClientWrapper(HttpClients.createSystem(), new RobotsCacheImpl())) {
+try (CloseableHttpClient httpClient = new HttpClientWrapper(HttpClients.createSystem())) {
   // use hhtpClient to conduct HTTP communication
 }
 ```
