@@ -27,9 +27,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
 import com.panforge.robotstxt.Grant;
-import com.panforge.robotstxt.exception.QueryExecutionException;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Apache HTTP client wrapper with robots.
@@ -65,7 +62,7 @@ public class HttpClientWrapper extends CloseableHttpClient {
     if (robotsTxt != null) {
       Header userAgentHeader = request.getFirstHeader("User-Agent");
       String userAgent = userAgentHeader != null ? userAgentHeader.getValue() : "";
-      Grant grant = ask(robotsTxt, userAgent, request.getRequestLine().getUri());
+      Grant grant = robotsTxt.ask(userAgent, request.getRequestLine().getUri());
       if (!grant.hasAccess()) {
         throw new HttpRobotsException(request.getRequestLine().getUri().toString(), userAgent, grant.getClause());
       }
@@ -74,34 +71,6 @@ public class HttpClientWrapper extends CloseableHttpClient {
       }
     }
     return httpClient.execute(target, request, context);
-  }
-
-  private Grant ask(RobotsTxt robotsTxt, String userAgent, String uri) {
-    try {
-      return robotsTxt.ask(userAgent, uri);
-    } catch (QueryExecutionException ex) {
-      return new Grant() {
-        @Override
-        public boolean hasAccess() {
-          return true;
-        }
-
-        @Override
-        public String getClause() {
-          return "";
-        }
-
-        @Override
-        public List<String> getUserAgents() {
-          return Collections.EMPTY_LIST;
-        }
-
-        @Override
-        public Integer getCrawlDelay() {
-          return null;
-        }
-      };
-    }
   }
 
   @Override
