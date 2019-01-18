@@ -20,7 +20,7 @@ Using in your own project:
     <dependency>
         <groupId>com.panforge</groupId>
         <artifactId>robots-http</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
     </dependency>
   ...
   </dependencies>
