@@ -20,7 +20,7 @@ Using in your own project:
     <dependency>
         <groupId>com.panforge</groupId>
         <artifactId>robots-http</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
     </dependency>
   ...
   </dependencies>
@@ -37,7 +37,7 @@ try (CloseableHttpClient httpClient = new HttpClientWrapper(HttpClients.createSy
 
 ## Requirements
 
-* Java JDK 1.8 or higher
+* Java JDK 11 or higher
 
 ## Licensing
 Copyright 2018 Piotr Andzel
